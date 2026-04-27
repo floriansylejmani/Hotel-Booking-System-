@@ -1,5 +1,11 @@
 # 🏨 Hotel Booking System
 
+![.NET](https://img.shields.io/badge/.NET-ASP.NET%20Core-blue)
+![Next.js](https://img.shields.io/badge/Next.js-Frontend-black)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 A modern, full-stack hotel management platform built with **ASP.NET Core**, **PostgreSQL**, and **Next.js**.  
 The system provides role-based access for administrators, staff, and guests, covering the core workflows of a real-world hotel operation.
 
