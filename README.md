@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏨 Hotel Booking System
 
-## Getting Started
+A modern, full-stack hotel management platform built with **ASP.NET Core**, **PostgreSQL**, and **Next.js**.  
+The system provides role-based access for administrators, staff, and guests, covering the core workflows of a real-world hotel operation.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This application is designed to simulate a production-grade hotel management system. It handles the full lifecycle of hotel operations, including room management, reservations, check-in/check-out, housekeeping, payments, and analytics.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The architecture follows industry best practices with clear separation of concerns and scalable design patterns.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🧩 Features
 
-To learn more about Next.js, take a look at the following resources:
+### 🛏️ Room Management
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Manage hotel rooms and availability
+- Track room status:
+  - Available
+  - Occupied
+  - Maintenance
+- Update pricing and room details
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 📅 Reservations & Bookings
 
-## Deploy on Vercel
+- Create, update, and cancel reservations
+- Prevent overlapping bookings
+- Track booking lifecycle (upcoming, active, completed)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🔑 Check-In / Check-Out
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Process guest check-ins and check-outs
+- Automatically update room status
+- Maintain booking history
+
+### 🧹 Housekeeping
+
+- Create and assign housekeeping tasks
+- Track task progress and completion
+- Support room readiness workflows
+
+### 💳 Payments & Revenue
+
+- Record booking payments
+- Track paid vs pending amounts
+- Monitor revenue metrics
+
+### 📊 Dashboard Analytics
+
+- Occupancy overview
+- Booking statistics
+- Revenue tracking
+- Operational insights
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+
+- ASP.NET Core Web API
+- Clean Architecture
+- Entity Framework Core
+- PostgreSQL
+- JWT Authentication
+- Role-based Authorization
+
+### Frontend
+
+- Next.js (App Router)
+- TypeScript
+- React
+- Component-based UI
+
+### DevOps
+
+- Docker
+- Docker Compose
+- Environment-based configuration
+
+---
+
+## 🏗️ Architecture
+
+The backend follows **Clean Architecture principles**, ensuring maintainability and scalability.
