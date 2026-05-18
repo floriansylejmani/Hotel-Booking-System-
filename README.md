@@ -1,5 +1,16 @@
 # Hotel Booking System
 
+![CI](https://github.com/floriansylejmani/Hotel-Booking-System-/actions/workflows/ci.yml/badge.svg)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![ASP.NET](https://img.shields.io/badge/ASP.NET_Core-9-512BD4?logo=dotnet)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791?logo=postgresql)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-38BDF8?logo=tailwindcss)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker)
+![Tests](https://img.shields.io/badge/Tests-126_Passing-success)
+![License](https://img.shields.io/badge/License-Portfolio-blue)
+
 Production-candidate full-stack hotel management platform built with ASP.NET Core, PostgreSQL, Next.js, React, TypeScript, Tailwind CSS, Docker Compose, and GitHub Actions.
 
 The project models the core workflows of a real hotel operation: authentication, role-based access, room inventory, bookings, check-in/check-out, payments, invoices, housekeeping, notifications, and operational dashboard metrics.
