@@ -50,7 +50,12 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Test backend with coverage
-        run: dotnet test --no-build --collect:"XPlat Code Coverage" --results-directory TestResults
+        run: dotnet test --collect:"XPlat Code Coverage" --results-directory TestResults
+
+      - name: Debug backend coverage output
+        run: |
+          pwd
+          find TestResults -name "coverage.cobertura.xml" -print
 
       - name: Verify backend coverage output
         run: test -n "$(find TestResults -name 'coverage.cobertura.xml' -print -quit)"
@@ -89,7 +94,11 @@ jobs:
         run: npm run test:coverage
 
       - name: Verify frontend coverage output
-        run: test -d coverage && test -f coverage/index.html
+        run: |
+          pwd
+          ls -la
+          ls -la coverage || true
+          test -f coverage/index.html
 
       - name: Build frontend
         run: npm run build
@@ -99,5 +108,7 @@ jobs:
         if: always()
         with:
           name: frontend-coverage
-          path: frontend/coverage/**
+          path: |
+            frontend/coverage/**
+            coverage/**
           if-no-files-found: error
