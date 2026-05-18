@@ -21,11 +21,11 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "5259:8080"
+      - "8080:8080"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=hotel_booking;Username=postgres;Password=postgres"
-      JwtSettings__Key: "CHANGE_THIS_TO_A_STRONG_SECRET_KEY_AT_LEAST_32_CHARS"
+      JwtSettings__Key: "${JWT_SECRET:?JWT_SECRET is required}"
       JwtSettings__Issuer: "HotelBookingSystem"
       JwtSettings__Audience: "HotelBookingSystem"
       JwtSettings__ExpirationMinutes: "60"

@@ -10,7 +10,7 @@ COPY src/HotelBooking.Infrastructure/HotelBooking.Infrastructure.csproj src/Hote
 COPY src/HotelBooking.Persistence/HotelBooking.Persistence.csproj   src/HotelBooking.Persistence/
 COPY src/HotelBooking.API/HotelBooking.API.csproj                   src/HotelBooking.API/
 
-RUN dotnet restore HotelBookingSystem.sln
+RUN dotnet restore src/HotelBooking.API/HotelBooking.API.csproj
 
 # Copy remaining source and publish
 COPY . .

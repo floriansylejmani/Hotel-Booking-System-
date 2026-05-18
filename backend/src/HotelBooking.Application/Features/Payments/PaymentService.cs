@@ -42,8 +42,11 @@ public sealed class PaymentService(
             .SumAsync(p => p.Amount, cancellationToken);
 
         var remaining = invoice.TotalAmount - totalPaid;
-        if (request.Amount > remaining)
-            throw new BadRequestException($"Payment amount exceeds remaining balance ({remaining:F2}).");
+        if (remaining <= 0)
+            throw new BadRequestException("This invoice has already been paid.");
+
+        if (request.Amount != remaining)
+            throw new BadRequestException($"Payment amount must match the remaining balance ({remaining:F2}).");
 
         var payment = new Payment
         {

@@ -35,8 +35,11 @@ public sealed class BookingService(
             .FirstOrDefaultAsync(r => r.Id == request.RoomId, cancellationToken)
             ?? throw new NotFoundException("Room", request.RoomId);
 
-        if (room.Status == RoomStatus.Maintenance)
-            throw new BadRequestException("This room is currently under maintenance and cannot be booked.");
+        if (room.Status != RoomStatus.Available)
+            throw new BadRequestException("This room is not currently available and cannot be booked.");
+
+        if (request.GuestCount > room.BedCount)
+            throw new BadRequestException($"Guest count cannot exceed room capacity ({room.BedCount}).");
 
         var overlaps = await db.Bookings.AnyAsync(b =>
             b.RoomId == request.RoomId &&

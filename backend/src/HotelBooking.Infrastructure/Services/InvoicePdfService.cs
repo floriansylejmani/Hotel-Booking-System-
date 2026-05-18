@@ -30,8 +30,8 @@ public class InvoicePdfService : IInvoicePdfService
     {
         container.Row(row =>
         {
-            row.RelativeColumn().Text("INVOICE").FontSize(28).Bold();
-            row.RelativeColumn().AlignRight().Column(col =>
+            row.RelativeItem().Text("INVOICE").FontSize(28).Bold();
+            row.RelativeItem().AlignRight().Column(col =>
             {
                 col.Item().Text("Hotel Booking System").FontSize(12).Bold();
                 col.Item().Text("123 Hotel Street, City");
@@ -46,7 +46,7 @@ public class InvoicePdfService : IInvoicePdfService
 
         container.Row(row =>
         {
-            row.RelativeColumn().Column(col =>
+            row.RelativeItem().Column(col =>
             {
                 col.Item().Text("Invoice Number").FontSize(9).Bold().FontColor("#999999");
                 col.Item().Text(invoice.InvoiceNumber).FontSize(11);
@@ -56,7 +56,7 @@ public class InvoicePdfService : IInvoicePdfService
                 col.Item().Text(invoice.IssuedAt.ToString("yyyy-MM-dd"));
             });
 
-            row.RelativeColumn().AlignRight().Column(col =>
+            row.RelativeItem().AlignRight().Column(col =>
             {
                 col.Item().Text("Guest").FontSize(9).Bold().FontColor("#999999");
                 col.Item().Text(invoice.GuestName).FontSize(11);
@@ -72,7 +72,7 @@ public class InvoicePdfService : IInvoicePdfService
 
         container.Row(row =>
         {
-            row.RelativeColumn().Column(col =>
+            row.RelativeItem().Column(col =>
             {
                 col.Item().Text("Check-in").FontSize(9).Bold().FontColor("#999999");
                 col.Item().Text(invoice.CheckInDate.ToString("yyyy-MM-dd")).FontSize(10);
@@ -82,7 +82,7 @@ public class InvoicePdfService : IInvoicePdfService
                 col.Item().Text(invoice.CheckOutDate.ToString("yyyy-MM-dd")).FontSize(10);
             });
 
-            row.RelativeColumn().AlignRight().Column(col =>
+            row.RelativeItem().AlignRight().Column(col =>
             {
                 col.Item().Text("Nights").FontSize(9).Bold().FontColor("#999999");
                 col.Item().Text((invoice.CheckOutDate.DayNumber - invoice.CheckInDate.DayNumber).ToString()).FontSize(10);
@@ -122,23 +122,23 @@ public class InvoicePdfService : IInvoicePdfService
         {
             col.Item().Row(row =>
             {
-                row.RelativeColumn(2);
-                row.RelativeColumn().Text("Subtotal:").AlignRight().FontSize(10);
-                row.ConstantColumn(100).Text($"${invoice.Subtotal:F2}").AlignRight().Bold().FontSize(10);
+                row.RelativeItem(2);
+                row.RelativeItem().Text("Subtotal:").AlignRight().FontSize(10);
+                row.ConstantItem(100).Text($"${invoice.Subtotal:F2}").AlignRight().Bold().FontSize(10);
             });
 
             col.Item().Row(row =>
             {
-                row.RelativeColumn(2);
-                row.RelativeColumn().Text("Tax (12%):").AlignRight().FontSize(10);
-                row.ConstantColumn(100).Text($"${invoice.TaxAmount:F2}").AlignRight().Bold().FontSize(10);
+                row.RelativeItem(2);
+                row.RelativeItem().Text("Tax (12%):").AlignRight().FontSize(10);
+                row.ConstantItem(100).Text($"${invoice.TaxAmount:F2}").AlignRight().Bold().FontSize(10);
             });
 
             col.Item().PaddingTop(0.3f, Unit.Centimetre).BorderTop(1).Row(row =>
             {
-                row.RelativeColumn(2);
-                row.RelativeColumn().Text("Total:").AlignRight().FontSize(12).Bold();
-                row.ConstantColumn(100).Text($"${invoice.TotalAmount:F2}").AlignRight().Bold().FontSize(12);
+                row.RelativeItem(2);
+                row.RelativeItem().Text("Total:").AlignRight().FontSize(12).Bold();
+                row.ConstantItem(100).Text($"${invoice.TotalAmount:F2}").AlignRight().Bold().FontSize(12);
             });
         });
     }

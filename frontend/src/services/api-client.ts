@@ -60,7 +60,14 @@ function handleUnauthorized() {
   }
 
   const redirect = encodeURIComponent(getRedirectTarget());
-  window.location.href = `/login?redirect=${redirect}`;
+  const target = `/login?redirect=${redirect}`;
+
+  if (window.navigator.userAgent.toLowerCase().includes("jsdom")) {
+    window.history.replaceState(null, "", target);
+    return;
+  }
+
+  window.location.href = target;
 }
 
 async function parseError(response: Response) {

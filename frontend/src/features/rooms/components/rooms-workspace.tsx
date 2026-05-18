@@ -181,7 +181,7 @@ export function RoomsWorkspace() {
   const openEditModal = (room: Room) => {
     form.reset({
       roomNumber: room.roomNumber,
-      type: room.type === "Presidential Suite" ? "Business Suite" : room.type,
+      type: room.type,
       pricePerNight: room.pricePerNight,
       floor: room.floor,
       beds: room.beds,
