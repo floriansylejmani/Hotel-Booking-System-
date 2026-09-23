@@ -84,7 +84,9 @@ public class ApplicationServiceTests
         var room = new Room { Id = Guid.NewGuid(), RoomNumber = "201", FloorNumber = 2, Type = RoomType.Deluxe, Status = RoomStatus.Available, PricePerNight = 150m, BedCount = 2, Amenities = ["WiFi"] };
         db.Users.Add(user); db.Rooms.Add(room); await db.SaveChangesAsync();
         var service = CreateBookingService(db);
-        var request = new CreateBookingRequest(null, room.Id, new DateOnly(2026, 7, 1), new DateOnly(2026, 7, 4), PaymentMethod.Card, 2);
+        var checkIn = DateOnly.FromDateTime(DateTime.UtcNow).AddDays(30);
+        var checkOut = checkIn.AddDays(3);
+        var request = new CreateBookingRequest(null, room.Id, checkIn, checkOut, PaymentMethod.Card, 2);
 
         var booking = await service.CreateAsync(request, user.Id);
 
