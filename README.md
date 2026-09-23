@@ -74,6 +74,17 @@ The project models the core workflows of a real hotel operation: authentication,
 
 ## Architecture
 
+```mermaid
+flowchart LR
+    UI["Next.js 16 / React 19"] --> API["ASP.NET Core 9 API"]
+    API --> APP["Application"]
+    APP --> DOMAIN["Domain"]
+    API --> INFRA["Infrastructure"]
+    API --> PERSIST["Persistence"]
+    INFRA --> DB[("PostgreSQL")]
+    PERSIST --> DB
+```
+
 The backend follows Clean Architecture boundaries:
 
 ```text
@@ -267,7 +278,11 @@ Workflow file:
 .github/workflows/ci.yml
 ```
 
+The CI badge at the top of this README is the live source of truth for the current `main` branch.
+
 ## Security Notes
+
+See [SECURITY.md](SECURITY.md) for vulnerability reporting and secure deployment guidance.
 
 - JWT secrets are not committed.
 - `.env` and `.env.local` files are ignored.
@@ -297,4 +312,4 @@ Generated folders and local-only files are ignored:
 
 ## License
 
-MIT
+This repository is presented as a portfolio project. No standalone license file is currently included.
