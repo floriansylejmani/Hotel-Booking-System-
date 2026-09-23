@@ -276,6 +276,8 @@ Workflow file:
 - Users are blocked from accessing other users' bookings, payments, invoices, and notifications.
 - Admin and staff endpoint access is covered by API tests.
 - SQL injection-like and XSS-like inputs are covered by validation/security tests.
+- Automatic migrations and demo seeding are disabled outside Development/Testing; production migrations must be applied by the deployment pipeline.
+- Production startup requires explicit CORS origins instead of falling back to an open-origin policy.
 
 ## Repository Hygiene
 
