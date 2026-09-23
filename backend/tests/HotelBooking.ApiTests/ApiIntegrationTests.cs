@@ -132,10 +132,12 @@ public class ApiIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
         var roomId = await CreateRoomAsync(client);
 
         await LoginAsAsync(client, "james.carter@example.com", "Guest123!");
-        var invalid = await client.PostAsJsonAsync("/api/bookings", new CreateBookingRequest(null, roomId, new DateOnly(2026, 9, 3), new DateOnly(2026, 9, 1), PaymentMethod.Card, 1));
+        var checkIn = TodayPlus(30);
+        var checkOut = checkIn.AddDays(2);
+        var invalid = await client.PostAsJsonAsync("/api/bookings", new CreateBookingRequest(null, roomId, checkOut, checkIn, PaymentMethod.Card, 1));
         Assert.Equal(HttpStatusCode.BadRequest, invalid.StatusCode);
 
-        var validRequest = new CreateBookingRequest(null, roomId, new DateOnly(2026, 9, 1), new DateOnly(2026, 9, 3), PaymentMethod.Card, 1);
+        var validRequest = new CreateBookingRequest(null, roomId, checkIn, checkOut, PaymentMethod.Card, 1);
         var first = await client.PostAsJsonAsync("/api/bookings", validRequest);
         first.EnsureSuccessStatusCode();
         var second = await client.PostAsJsonAsync("/api/bookings", validRequest);
@@ -150,11 +152,13 @@ public class ApiIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
         var roomId = await CreateRoomAsync(client);
         client.DefaultRequestHeaders.Authorization = null;
 
-        var anonymous = await client.PostAsJsonAsync("/api/bookings", new CreateBookingRequest(null, roomId, new DateOnly(2026, 11, 1), new DateOnly(2026, 11, 3), PaymentMethod.Card, 1));
+        var checkIn = TodayPlus(40);
+        var checkOut = checkIn.AddDays(2);
+        var anonymous = await client.PostAsJsonAsync("/api/bookings", new CreateBookingRequest(null, roomId, checkIn, checkOut, PaymentMethod.Card, 1));
         Assert.Equal(HttpStatusCode.Unauthorized, anonymous.StatusCode);
 
         await LoginAsAsync(client, "james.carter@example.com", "Guest123!");
-        var booking = await CreateBookingAsync(client, roomId, new DateOnly(2026, 11, 1), new DateOnly(2026, 11, 3));
+        var booking = await CreateBookingAsync(client, roomId, checkIn, checkOut);
         var cancel = await client.PutAsync($"/api/bookings/{booking.Id}/cancel", null);
 
         cancel.EnsureSuccessStatusCode();
@@ -168,7 +172,8 @@ public class ApiIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
         var roomId = await CreateRoomAsync(client);
 
         await LoginAsAsync(client, "james.carter@example.com", "Guest123!");
-        var booking = await CreateBookingAsync(client, roomId, new DateOnly(2026, 10, 1), new DateOnly(2026, 10, 3));
+        var checkIn = TodayPlus(50);
+        var booking = await CreateBookingAsync(client, roomId, checkIn, checkIn.AddDays(2));
 
         await LoginAsAsync(client, "the.williams@example.com", "Guest123!");
         var cancel = await client.PutAsync($"/api/bookings/{booking.Id}/cancel", null);
@@ -224,7 +229,8 @@ public class ApiIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
         var roomId = await CreateRoomAsync(client);
 
         await LoginAsAsync(client, "james.carter@example.com", "Guest123!");
-        var booking = await CreateBookingAsync(client, roomId, new DateOnly(2026, 12, 15), new DateOnly(2026, 12, 17));
+        var checkIn = TodayPlus(60);
+        var booking = await CreateBookingAsync(client, roomId, checkIn, checkIn.AddDays(2));
 
         await LoginAsAsync(client, "admin@hotel.com", "Admin123!");
         var invoice = await client.GetAsync($"/api/invoices/{booking.Id}");
@@ -270,6 +276,9 @@ public class ApiIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
         var invalidPayment = await client.PostAsJsonAsync("/api/payments", new ProcessPaymentRequest(Guid.NewGuid(), PaymentMethod.Card.ToString(), -1m));
         Assert.Equal(HttpStatusCode.BadRequest, invalidPayment.StatusCode);
     }
+
+    private static DateOnly TodayPlus(int days) =>
+        DateOnly.FromDateTime(DateTime.UtcNow).AddDays(days);
 
     private static async Task LoginAsAsync(HttpClient client, string email, string password)
     {

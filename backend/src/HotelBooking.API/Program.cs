@@ -126,9 +126,18 @@ try
         options.AddDefaultPolicy(policy =>
         {
             if (allowedOrigins is { Length: > 0 })
+            {
                 policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod();
-            else
+            }
+            else if (builder.Environment.IsDevelopment() || builder.Environment.IsEnvironment("Testing"))
+            {
                 policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    "CorsSettings:AllowedOrigins must be configured outside Development/Testing.");
+            }
         });
     });
 
@@ -165,9 +174,18 @@ try
     }).AllowAnonymous();
     app.MapControllers();
 
-    app.Logger.LogInformation("Initializing database");
-    await app.Services.InitializeDatabaseAsync();
-    app.Logger.LogInformation("Database initialization complete");
+    if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Testing"))
+    {
+        app.Logger.LogInformation("Initializing development/test database");
+        await app.Services.InitializeDatabaseAsync();
+        app.Logger.LogInformation("Development/test database initialization complete");
+    }
+    else
+    {
+        app.Logger.LogInformation(
+            "Automatic migrations and demo seeding are disabled outside Development/Testing. " +
+            "Apply production migrations through the deployment pipeline.");
+    }
 
     app.Run();
 }
